@@ -1,27 +1,30 @@
-package com.example.CouponSystemSagi.com.example.entity;
+package com.example.database.entity;
 
-import org.springframework.data.annotation.Id;
+import javax.persistence.Id;
 
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 public class Company {
     @Id
-    long  id ;
-    String companyName;
-    String password;
-    String eMail;
-    private Set<Coupon> couponList;
+     private long  id ;
+  private String companyName;
+  private String password;
+  private String eMail;
 
-    public Set<Coupon> getCouponList() {
-        return couponList;
+    @ManyToMany(mappedBy = "companies")
+    private List<Coupon> coupons;
+
+    public List<Coupon> getCoupons() {
+        return coupons;
     }
 
-    public void setCouponList(Set<Coupon> couponList) {
-        this.couponList = couponList;
+    public void setCoupons(List<Coupon> coupons) {
+        this.coupons = coupons;
     }
+
 
     public String getCompanyName() {
         return companyName;

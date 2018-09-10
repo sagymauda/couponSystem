@@ -1,25 +1,29 @@
-package com.example.CouponSystemSagi.com.example.entity;
+package com.example.database.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import java.util.Set;
+import javax.persistence.ManyToMany;
+import java.io.Serializable;
+import java.util.List;
 
 @Entity
-public class Customer {
+public class Customer implements Serializable {
     @Id
-    long id;
-    String CustName;
-    String password;
-    private Set<Coupon> couponSet;
+    private long id;
+    private String CustName;
+    private String password;
 
+    @ManyToMany(mappedBy = "customers")
+    private List<Coupon> coupons;
 
-    public Set<Coupon> getCouponSet() {
-        return couponSet;
+    public List<Coupon> getCoupons() {
+        return coupons;
     }
 
-    public void setCouponSet(Set<Coupon> couponSet) {
-        this.couponSet = couponSet;
+    public void setCoupons(List<Coupon> coupons) {
+        this.coupons = coupons;
     }
+
     public long getId() {
         return id;
     }

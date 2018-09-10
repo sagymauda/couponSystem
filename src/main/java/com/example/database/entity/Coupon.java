@@ -1,42 +1,45 @@
-package com.example.CouponSystemSagi.com.example.entity;
+package com.example.database.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import java.util.Date;
-import java.util.Set;
+import java.util.List;
 
 @Entity
 public class Coupon {
     @Id
-    long id;
-    String title;
-    Date start_Date;
-    Date end_Date;
-    int amount;
-    Enum type;
-    String message;
-    double price;
-    String image;
-    private Set<Company> companySet;
-    private Set<Customer> customerSet;
-    public Set<Customer> getCustomerSet() {
-        return customerSet;
+  private  long id;
+    private String title;
+    private Date start_Date;
+    private Date end_Date;
+    private int amount;
+    private Enum type;
+    private String message;
+    private double price;
+    private String image;
+
+    @ManyToMany
+    private List<Company> companies;
+    @ManyToMany
+    private List<Customer> customers;
+
+    public List<Company> getCompanies() {
+        return companies;
     }
 
-    public void setCustomerSet(Set<Customer> customerSet) {
-        this.customerSet = customerSet;
+    public void setCompanies(List<Company> companies) {
+        this.companies = companies;
     }
 
-
-
-
-    public Set<Company> getCompanySet() {
-        return companySet;
+    public List<Customer> getCustomers() {
+        return customers;
     }
 
-    public void setCompanySet(Set<Company> companySet) {
-        this.companySet = companySet;
+    public void setCustomers(List<Customer> customers) {
+        this.customers = customers;
     }
+
 
     public long getId() {
         return id;
