@@ -19,7 +19,5 @@ public class MyRunner implements CommandLineRunner {
         customer.setPassword("lsdisverygood");
         repo.save(customer);
 
-        Customer c1 = repo.findByName("sagi");
-        System.out.println(c1);
     }
 }
