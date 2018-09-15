@@ -32,13 +32,23 @@ public class MyRunner implements CommandLineRunner {
 
   Coupon coupon= new Coupon();
   coupon.setTitle("title nesamam sagiii");
+Coupon coupon1= new Coupon();
+coupon1.setTitle("second title company");
+Coupon coupon2= new Coupon();
+coupon2.setTitle("thired title coulo[b");
+couponRepo.save(coupon1);
+couponRepo.save(coupon2);
   couponRepo.save(coupon);
 company.addCoupon(coupon);
 companyRepo.save(company);
-List<Coupon>coupons=couponRepo.findByCompany(company);
+Company company1= companyRepo.getCompanyById(company.getId());
+        System.out.println(company1);
+
+List<Coupon>coupons=company1.getCoupons();
+        System.out.println(coupons.toString());
 
         System.out.println("gfttttggggggggggggg");
-        System.out.println(coupons);
+        System.out.println();
     }
     }
 

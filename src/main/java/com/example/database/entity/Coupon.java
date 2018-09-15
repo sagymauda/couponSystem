@@ -2,10 +2,7 @@ package com.example.database.entity;
 
 import com.example.database.Enums.CouponType;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 
@@ -22,7 +19,28 @@ public class Coupon {
     private String message;
     private double price;
     private String image;
-  //  private  Company company;
+
+    public Company getCompany() {
+        return company;
+    }
+
+    public void setCompany(Company company) {
+        this.company = company;
+    }
+
+    @ManyToOne
+    private Company company;
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
+
+    @ManyToOne
+    private Customer customer;
 
 
     ;
