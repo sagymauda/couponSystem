@@ -1,28 +1,29 @@
 package com.example.database.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
 
 @Entity
 public class Customer implements Serializable {
     @Id
+    @GeneratedValue
     private long id;
     private String CustName;
     private String password;
 
-    @ManyToMany(mappedBy = "customers")
+    @OneToMany
     private List<Coupon> coupons;
+public Customer(){}
+    public Customer(String custName, String password) {
+        CustName = custName;
+        this.password = password;
+    }
 
     public List<Coupon> getCoupons() {
         return coupons;
     }
 
-    public void setCoupons(List<Coupon> coupons) {
-        this.coupons = coupons;
-    }
 
     public long getId() {
         return id;
@@ -50,4 +51,12 @@ public class Customer implements Serializable {
     }
 
 
+    @Override
+    public String toString() {
+        return "Customer{" +
+                "id=" + id +
+                ", CustName='" + CustName + '\'' +
+                ", password='" + password + '\'' +
+                '}';
+    }
 }

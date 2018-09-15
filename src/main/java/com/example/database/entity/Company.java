@@ -1,28 +1,34 @@
 package com.example.database.entity;
 
-import javax.persistence.Id;
+import javax.persistence.*;
 
-import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 public class Company {
     @Id
-     private long  id ;
-  private String companyName;
-  private String password;
-  private String eMail;
+    @GeneratedValue
+    private long id;
+    private String companyName;
+    private String password;
+    private String eMail;
 
-    @ManyToMany(mappedBy = "companies")
-    private List<Coupon> coupons;
+    @OneToMany
+    private List<Coupon> coupons= new ArrayList<>();
+    public Company()
+    {}
 
+    public Company(String companyName, String password, String eMail) {
+        this.companyName = companyName;
+        this.password = password;
+        this.eMail = eMail;
+    }
+   public void addCoupon(Coupon coupon){
+        this.coupons.add(coupon);
+   }
     public List<Coupon> getCoupons() {
         return coupons;
-    }
-
-    public void setCoupons(List<Coupon> coupons) {
-        this.coupons = coupons;
     }
 
 
@@ -51,12 +57,21 @@ public class Company {
     }
 
 
-
     public long getId() {
         return id;
     }
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    @Override
+    public String toString() {
+        return "Company{" +
+                "id=" + id +
+                ", companyName='" + companyName + '\'' +
+                ", password='" + password + '\'' +
+                ", eMail='" + eMail + '\'' +
+                '}';
     }
 }

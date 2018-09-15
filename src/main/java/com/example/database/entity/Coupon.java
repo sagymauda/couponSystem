@@ -1,6 +1,9 @@
 package com.example.database.entity;
 
+import com.example.database.Enums.CouponType;
+
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import java.util.Date;
@@ -9,37 +12,31 @@ import java.util.List;
 @Entity
 public class Coupon {
     @Id
-  private  long id;
+    @GeneratedValue
+    private long id;
     private String title;
     private Date start_Date;
     private Date end_Date;
     private int amount;
-    private Enum type;
+    private CouponType type;
     private String message;
     private double price;
     private String image;
+  //  private  Company company;
 
-    @ManyToMany
-    private List<Company> companies;
-    @ManyToMany
-    private List<Customer> customers;
 
-    public List<Company> getCompanies() {
-        return companies;
-    }
-
-    public void setCompanies(List<Company> companies) {
-        this.companies = companies;
-    }
-
-    public List<Customer> getCustomers() {
-        return customers;
-    }
-
-    public void setCustomers(List<Customer> customers) {
-        this.customers = customers;
-    }
-
+    ;
+//     public  Coupon(){}
+//    public Coupon(String title, Date start_Date, Date end_Date, int amount, CouponType type, String message, double price, String image) {
+//        this.title = title;
+//        this.start_Date = start_Date;
+//        this.end_Date = end_Date;
+//        this.amount = amount;
+//        this.type = type;
+//        this.message = message;
+//        this.price = price;
+//        this.image = image;
+//    }
 
     public long getId() {
         return id;
@@ -85,7 +82,7 @@ public class Coupon {
         return type;
     }
 
-    public void setType(Enum type) {
+    public void setType(CouponType type) {
         this.type = type;
     }
 
@@ -112,4 +109,20 @@ public class Coupon {
     public void setImage(String image) {
         this.image = image;
     }
+
+    @Override
+    public String toString() {
+        return "Coupon{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", start_Date=" + start_Date +
+                ", end_Date=" + end_Date +
+                ", amount=" + amount +
+                ", type=" + type +
+                ", message='" + message + '\'' +
+                ", price=" + price +
+                ", image='" + image + '\'' +
+                '}';
+    }
+
 }
