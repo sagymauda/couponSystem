@@ -13,6 +13,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -40,12 +41,15 @@ couponRepo.save(coupon1);
 couponRepo.save(coupon2);
   couponRepo.save(coupon);
 company.addCoupon(coupon);
+company.addCoupon(coupon1);
+company.addCoupon(coupon2);
 companyRepo.save(company);
 Company company1= companyRepo.getCompanyById(company.getId());
         System.out.println(company1);
 
-List<Coupon>coupons=company1.getCoupons();
-        System.out.println(coupons.toString());
+List<Coupon>coupons= new ArrayList<>();
+   //   System.out.println(coupons=company1.getCoupons());
+
 
         System.out.println("gfttttggggggggggggg");
         System.out.println();

@@ -2,6 +2,7 @@ package com.example.database.entity;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -12,12 +13,19 @@ public class Customer implements Serializable {
     private String CustName;
     private String password;
 
-    @OneToMany
-    private List<Coupon> coupons;
-public Customer(){}
+    @OneToMany(fetch = FetchType.EAGER)
+    private List<Coupon> coupons= new ArrayList<>();
+
+    public Customer() {
+    }
+
     public Customer(String custName, String password) {
         CustName = custName;
         this.password = password;
+    }
+
+    public void addCoupon(Coupon coupon) {
+        this.coupons.add(coupon);
     }
 
     public List<Coupon> getCoupons() {

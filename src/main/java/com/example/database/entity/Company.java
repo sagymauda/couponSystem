@@ -14,7 +14,7 @@ public class Company {
     private String password;
     private String eMail;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     private List<Coupon> coupons= new ArrayList<>();
     public Company()
     {}

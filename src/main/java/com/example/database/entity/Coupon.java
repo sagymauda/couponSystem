@@ -20,6 +20,12 @@ public class Coupon {
     private double price;
     private String image;
 
+    @ManyToOne
+    private Company company;
+
+    @ManyToOne
+    private Customer customer;
+
     public Company getCompany() {
         return company;
     }
@@ -28,9 +34,6 @@ public class Coupon {
         this.company = company;
     }
 
-    @ManyToOne
-    private Company company;
-
     public Customer getCustomer() {
         return customer;
     }
@@ -38,9 +41,6 @@ public class Coupon {
     public void setCustomer(Customer customer) {
         this.customer = customer;
     }
-
-    @ManyToOne
-    private Customer customer;
 
 
     ;
