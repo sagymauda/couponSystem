@@ -3,6 +3,7 @@ package com.example.database.entity;
 import com.example.database.Enums.CouponType;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -23,8 +24,16 @@ public class Coupon {
     @ManyToOne
     private Company company;
 
-    @ManyToOne
-    private Customer customer;
+    @ManyToMany
+    private List<Customer>customers= new ArrayList<>();
+
+    public List<Customer> getCustomers() {
+        return customers;
+    }
+
+    public void setCustomers(List<Customer> customers) {
+        this.customers = customers;
+    }
 
     public Company getCompany() {
         return company;
@@ -34,13 +43,7 @@ public class Coupon {
         this.company = company;
     }
 
-    public Customer getCustomer() {
-        return customer;
-    }
 
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
-    }
 
 
     ;

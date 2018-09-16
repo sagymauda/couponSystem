@@ -13,7 +13,7 @@ public class Customer implements Serializable {
     private String CustName;
     private String password;
 
-    @OneToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER,mappedBy = "customers")
     private List<Coupon> coupons= new ArrayList<>();
 
     public Customer() {
