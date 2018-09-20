@@ -25,7 +25,7 @@ public class Coupon {
     private Company company;
 
     @ManyToMany
-    private List<Customer>customers= new ArrayList<>();
+    private List<Customer> customers= new ArrayList<>();
 
     public List<Customer> getCustomers() {
         return customers;
@@ -33,6 +33,9 @@ public class Coupon {
 
     public void setCustomers(List<Customer> customers) {
         this.customers = customers;
+    }
+    public void addCustomer(Customer customer){
+        customers.add(customer);
     }
 
     public Company getCompany() {
@@ -42,8 +45,6 @@ public class Coupon {
     public void setCompany(Company company) {
         this.company = company;
     }
-
-
 
 
     ;

@@ -12,11 +12,6 @@ import java.util.Set;
 public interface CustomerRepo extends JpaRepository<Customer,Long> {
 public Customer getCustomerById(long id);
 public List<Customer> findAll();
-// @Query("SELECT " +
-//         "    new com.example.database.entity.Coupon(v.answer, COUNT(v)) " +
-//         "FROM " +
-//         "    Survey v " +
-//         "GROUP BY " +
-//         "    v.answer")
-//public List<Coupon> getCoupons();
+
+
 }

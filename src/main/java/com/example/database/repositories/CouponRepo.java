@@ -12,8 +12,11 @@ import java.util.List;
 @Repository
 public interface CouponRepo extends JpaRepository<Coupon,Long> {
 public Coupon getCouponById(long id);
-public Coupon getCouponByType(CouponType type);
-//public List<Coupon> findByCompany(Company company);
-public List<Coupon> findAllByType(CouponType type);
+public List<Coupon> getCouponsByType(CouponType type);
+
+  public  List<Coupon> findAll();
+  public  List<Coupon> findCouponsByCompany(Company company);
+  public  List<Coupon> findCouponsByCustomers(List<Customer> customers);
+  //  public  void removeCouponsByCompanyId(long id);
 
 }
