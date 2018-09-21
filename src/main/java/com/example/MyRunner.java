@@ -13,9 +13,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Component
 public class MyRunner implements CommandLineRunner {
@@ -28,31 +26,43 @@ public class MyRunner implements CommandLineRunner {
     private CompanyRepo companyRepo;
 
     public void run(String... args) throws Exception {
-  Company company= new Company("sagis","1111","S@M.com");
-  companyRepo.save(company);
+        Company company = new Company("sagis", "2222", "S@mM.com");
+        Coupon coupon = new Coupon();
+        coupon.setTitle("title nesamam sagiii");
 
-  Coupon coupon= new Coupon();
-  coupon.setTitle("title nesamam sagiii");
-Coupon coupon1= new Coupon();
-coupon1.setTitle("second title company");
-Coupon coupon2= new Coupon();
-coupon2.setTitle("thired title coulo[b");
-couponRepo.save(coupon1);
-couponRepo.save(coupon2);
-  couponRepo.save(coupon);
-company.addCoupon(coupon);
-company.addCoupon(coupon1);
-company.addCoupon(coupon2);
-companyRepo.save(company);
-Company company1= companyRepo.getCompanyById(company.getId());
-        System.out.println(company1);
+        company.addCoupon(coupon);
 
-List<Coupon>coupons= new ArrayList<>();
-   //   System.out.println(coupons=company1.getCoupons());
+        Coupon c1 = new Coupon();
+        c1.setTitle("hhhh");
+        company.addCoupon(c1);
 
+        companyRepo.save(company);
+        Company c = companyRepo.getCompanyById(company.getId());
+        System.out.println(c.getCoupons());
+        System.out.println("-------------------");
+        System.out.println(couponRepo.findCouponsByCompanyId(c.getId()));
+        System.out.println(couponRepo.findCouponsByCompany(c));
+        System.out.println("-------------------");
+        Customer customer = new Customer();
+        customer.setCustName("shahaf");
+        customer.addCoupon(coupon);
+        coupon.setCustomers(Collections.singletonList(customer));
 
-        System.out.println("gfttttggggggggggggg");
-        System.out.println();
+//        custrepo.save(customer);
+        couponRepo.save(coupon);
+        System.out.println(custrepo.findCustomersByCoupons(Collections.singletonList(coupon)));
+        System.out.println(custrepo.findCustomersByCouponsContains(coupon));
+        Customer customer1 = custrepo.findOne(1L);
+        System.out.println(customer1);
+        System.out.println("--------------------");
+        System.out.println(couponRepo.findCouponsByCustomersContains(customer1));
+        System.out.println(couponRepo.findCouponsBySingleCustomer(customer1));
+        companyRepo.delete(c);
+
+//        final String[] lesquestions = {"random1", "random2", "random3"};
+        List<String> lesquestions = Arrays.asList("random1", "random2", "random3");
+        lesquestions.remove()
     }
-    }
+
+}
 

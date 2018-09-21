@@ -21,11 +21,13 @@ public class Coupon {
     private double price;
     private String image;
 
-    @ManyToOne
-    private Company company;
+//    @ManyToOne
+//    @JoinColumn(name = "company_id")
+//    private Company company;
 
-    @ManyToMany
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Customer>customers= new ArrayList<>();
+
 
     public List<Customer> getCustomers() {
         return customers;
@@ -35,28 +37,12 @@ public class Coupon {
         this.customers = customers;
     }
 
-    public Company getCompany() {
-        return company;
-    }
-
-    public void setCompany(Company company) {
-        this.company = company;
-    }
-
-
-
-
-    ;
-//     public  Coupon(){}
-//    public Coupon(String title, Date start_Date, Date end_Date, int amount, CouponType type, String message, double price, String image) {
-//        this.title = title;
-//        this.start_Date = start_Date;
-//        this.end_Date = end_Date;
-//        this.amount = amount;
-//        this.type = type;
-//        this.message = message;
-//        this.price = price;
-//        this.image = image;
+//    public Company getCompany() {
+//        return company;
+//    }
+//
+//    public void setCompany(Company company) {
+//        this.company = company;
 //    }
 
     public long getId() {

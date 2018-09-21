@@ -7,6 +7,7 @@ import java.util.List;
 
 @Entity
 public class Company {
+
     @Id
     @GeneratedValue
     private long id;
@@ -14,10 +15,11 @@ public class Company {
     private String password;
     private String eMail;
 
-    @OneToMany(fetch = FetchType.EAGER)
-    private List<Coupon> coupons= new ArrayList<>();
-    public Company()
-    {}
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "company_id")
+    private List<Coupon> coupons = new ArrayList<>();
+
+    public Company() {}
 
     public Company(String companyName, String password, String eMail) {
         this.companyName = companyName;
@@ -30,7 +32,6 @@ public class Company {
     public List<Coupon> getCoupons() {
         return coupons;
     }
-
 
     public String getCompanyName() {
         return companyName;

@@ -13,8 +13,8 @@ public class Customer implements Serializable {
     private String CustName;
     private String password;
 
-    @ManyToMany(fetch = FetchType.EAGER,mappedBy = "customers")
-    private List<Coupon> coupons= new ArrayList<>();
+    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "customers", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    private List<Coupon> coupons = new ArrayList<>();
 
     public Customer() {
     }
