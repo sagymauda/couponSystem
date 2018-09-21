@@ -46,9 +46,8 @@ public class MyRunner implements CommandLineRunner {
         Customer customer = new Customer();
         customer.setCustName("shahaf");
         customer.addCoupon(coupon);
-        coupon.setCustomers(Collections.singletonList(customer));
 
-//        custrepo.save(customer);
+        custrepo.save(customer);
         couponRepo.save(coupon);
         System.out.println(custrepo.findCustomersByCoupons(Collections.singletonList(coupon)));
         System.out.println(custrepo.findCustomersByCouponsContains(coupon));
@@ -57,11 +56,8 @@ public class MyRunner implements CommandLineRunner {
         System.out.println("--------------------");
         System.out.println(couponRepo.findCouponsByCustomersContains(customer1));
         System.out.println(couponRepo.findCouponsBySingleCustomer(customer1));
-        companyRepo.delete(c);
+//        companyRepo.delete(c);
 
-//        final String[] lesquestions = {"random1", "random2", "random3"};
-        List<String> lesquestions = Arrays.asList("random1", "random2", "random3");
-        lesquestions.remove()
     }
 
 }
