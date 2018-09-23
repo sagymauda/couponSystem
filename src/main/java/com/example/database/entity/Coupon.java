@@ -21,11 +21,7 @@ public class Coupon {
     private double price;
     private String image;
 
-//    @ManyToOne
-//    @JoinColumn(name = "company_id")
-//    private Company company;
-
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToMany(cascade = {CascadeType.ALL})
     private List<Customer>customers= new ArrayList<>();
 
 
