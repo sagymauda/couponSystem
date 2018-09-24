@@ -3,9 +3,7 @@ package com.example.database.entity;
 import com.example.database.Enums.CouponType;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Entity
 public class Coupon {
@@ -21,29 +19,31 @@ public class Coupon {
     private double price;
     private String image;
 
-//    @ManyToOne
-//    @JoinColumn(name = "company_id")
-//    private Company company;
+    @ManyToOne
+    private Company company;
 
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    private List<Customer>customers= new ArrayList<>();
+    @ManyToMany(fetch = FetchType.EAGER)
+    private Set<Customer> customers = new HashSet<>();
 
+    public Company getCompany() {
+        return company;
+    }
 
-    public List<Customer> getCustomers() {
+    public void setCompany(Company company) {
+        this.company = company;
+    }
+
+    public Set<Customer> getCustomers() {
         return customers;
     }
 
-    public void setCustomers(List<Customer> customers) {
+    public void setCustomers(Set<Customer> customers) {
         this.customers = customers;
     }
 
-//    public Company getCompany() {
-//        return company;
-//    }
-//
-//    public void setCompany(Company company) {
-//        this.company = company;
-//    }
+    public void removeCustomer(Customer customer) {
+        this.customers.remove(customer);
+    }
 
     public long getId() {
         return id;
@@ -132,4 +132,18 @@ public class Coupon {
                 '}';
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Coupon coupon = (Coupon) o;
+
+        return title.equals(coupon.title);
+    }
+
+    @Override
+    public int hashCode() {
+        return title.hashCode();
+    }
 }

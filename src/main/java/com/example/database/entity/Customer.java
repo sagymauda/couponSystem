@@ -3,18 +3,22 @@ package com.example.database.entity;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 public class Customer implements Serializable {
     @Id
     @GeneratedValue
     private long id;
+
+    @Column
     private String CustName;
     private String password;
 
-    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "customers", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    private List<Coupon> coupons = new ArrayList<>();
+    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "customers")
+    private Set<Coupon> coupons = new HashSet<>();
 
     public Customer() {
     }
@@ -28,8 +32,12 @@ public class Customer implements Serializable {
         this.coupons.add(coupon);
     }
 
-    public List<Coupon> getCoupons() {
+    public Set<Coupon> getCoupons() {
         return coupons;
+    }
+
+    public void setCoupons(Set<Coupon> coupons) {
+        this.coupons = coupons;
     }
 
 
@@ -66,5 +74,20 @@ public class Customer implements Serializable {
                 ", CustName='" + CustName + '\'' +
                 ", password='" + password + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Customer customer = (Customer) o;
+
+        return CustName.equals(customer.CustName);
+    }
+
+    @Override
+    public int hashCode() {
+        return CustName.hashCode();
     }
 }

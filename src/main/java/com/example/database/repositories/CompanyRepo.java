@@ -14,13 +14,5 @@ public interface CompanyRepo extends JpaRepository<Company, Long> {
 
     public List<Company> findAll();
 
-// @Query("SELECT " +
-//         "    new com.example.database.entity.Coupon(v.answer, COUNT(v)) " +
-//         "FROM " +
-//         "    Survey v " +
-//         "GROUP BY " +
-//         "    v.answer")
-//public List<Coupon> getCoupons();
-
 
 }

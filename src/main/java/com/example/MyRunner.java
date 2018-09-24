@@ -1,62 +1,89 @@
 package com.example;
 
-import com.example.database.Enums.CouponType;
 import com.example.database.entity.Company;
 import com.example.database.entity.Coupon;
 import com.example.database.entity.Customer;
 import com.example.database.repositories.CompanyRepo;
 import com.example.database.repositories.CouponRepo;
 import com.example.database.repositories.CustomerRepo;
-import com.example.utils.PopDb;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Component
 public class MyRunner implements CommandLineRunner {
 
     @Autowired
-    private CustomerRepo custrepo ;
+    private CustomerRepo customerRepo;
     @Autowired
-    private CouponRepo couponRepo ;
+    private CouponRepo couponRepo;
     @Autowired
     private CompanyRepo companyRepo;
 
     public void run(String... args) throws Exception {
+        // create new company
         Company company = new Company("sagis", "2222", "S@mM.com");
-        Coupon coupon = new Coupon();
-        coupon.setTitle("title nesamam sagiii");
-
-        company.addCoupon(coupon);
-
-        Coupon c1 = new Coupon();
-        c1.setTitle("hhhh");
-        company.addCoupon(c1);
-
         companyRepo.save(company);
-        Company c = companyRepo.getCompanyById(company.getId());
-        System.out.println(c.getCoupons());
-        System.out.println("-------------------");
-        System.out.println(couponRepo.findCouponsByCompanyId(c.getId()));
-        System.out.println(couponRepo.findCouponsByCompany(c));
-        System.out.println("-------------------");
-        Customer customer = new Customer();
-        customer.setCustName("shahaf");
-        customer.addCoupon(coupon);
 
-        custrepo.save(customer);
-        couponRepo.save(coupon);
-        System.out.println(custrepo.findCustomersByCoupons(Collections.singletonList(coupon)));
-        System.out.println(custrepo.findCustomersByCouponsContains(coupon));
-        Customer customer1 = custrepo.findOne(1L);
-        System.out.println(customer1);
-        System.out.println("--------------------");
-        System.out.println(couponRepo.findCouponsByCustomersContains(customer1));
-        System.out.println(couponRepo.findCouponsBySingleCustomer(customer1));
-//        companyRepo.delete(c);
+        // create new coupon and associate it to a company
+        Coupon coupon1 = new Coupon();
+        coupon1.setTitle("coupon1");
+        coupon1.setCompany(company);
+        couponRepo.save(coupon1);
+
+        // create new customer
+        Customer customer = new Customer();
+        customer.setCustName("me");
+        customerRepo.save(customer);
+
+        // create new customer
+        Customer customer1 = new Customer();
+        customer1.setCustName("me2");
+        customerRepo.save(customer1);
+
+        // customer buy a coupon
+        Set<Customer> customers = new HashSet<>();
+        customers.add(customer);
+        customers.add(customer1);
+        coupon1.setCustomers(customers);
+        couponRepo.save(coupon1);
+
+        // find all company's coupons
+        List<Coupon> companyCoupons = couponRepo.findCouponsByCompany(company);
+        System.out.println(companyCoupons);
+
+        // find all customers who bought a coupon
+        List<Customer> couponCustomers = customerRepo.findCustomersByCoupon(coupon1);
+        System.out.println(couponCustomers);
+
+        // find all coupons bought by a customer
+        List<Coupon> customerCoupons = couponRepo.findCouponsByCustomer(customer);
+        System.out.println(customerCoupons);
+
+        // find all company's customers
+        List<Customer> customers1 = customerRepo.findCustomersByCompany(company);
+        System.out.println(customers1);
+
+        // delete coupon
+        couponRepo.delete(coupon1);
+
+        // delete customer (first remove it from all coupons)
+        List<Coupon> customerCoupons1 = couponRepo.findCouponsByCustomer(customer);
+        for (Coupon c : customerCoupons1) {
+            c.removeCustomer(customer);
+            couponRepo.save(coupon1);
+        }
+        customerRepo.delete(customer);
+
+
+        // delete company (first delete it's coupons)
+        List<Coupon> coupons = couponRepo.findCouponsByCompany(company);
+        for (Coupon c : coupons) {
+            couponRepo.delete(c);
+        }
+        companyRepo.delete(company);
 
     }
 
