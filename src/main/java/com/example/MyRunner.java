@@ -106,6 +106,7 @@ public class MyRunner implements CommandLineRunner {
 
         coupons=  customerService.getAllPurchasedCouponsByPriceUpTo(4.0);
         System.out.println(coupons.toString()+"fhrghgfgrthrthrthrth");
+        System.out.println("making a change");
     }
 
 }
