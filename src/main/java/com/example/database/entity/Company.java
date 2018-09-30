@@ -1,5 +1,7 @@
 package com.example.database.entity;
 
+import org.hibernate.annotations.Cascade;
+
 import javax.persistence.*;
 
 import java.util.ArrayList;
@@ -7,30 +9,33 @@ import java.util.List;
 
 @Entity
 public class Company {
+
     @Id
     @GeneratedValue
     private long id;
     private String companyName;
     private String password;
-    private String eMail;
+    private String email;
 
-    @OneToMany(cascade=CascadeType.ALL,mappedBy = "company")
-    private List<Coupon> coupons= new ArrayList<>();
-    public Company()
-    {}
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "company")
+    private List<Coupon> coupons = new ArrayList<>();
 
-    public Company(String companyName, String password, String eMail) {
+    public Company() {
+    }
+
+    public Company(String companyName, String password, String email) {
         this.companyName = companyName;
         this.password = password;
-        this.eMail = eMail;
+        this.email = email;
     }
-   public void addCoupon(Coupon coupon){
+
+    public void addCoupon(Coupon coupon) {
         this.coupons.add(coupon);
-   }
+    }
+
     public List<Coupon> getCoupons() {
         return coupons;
     }
-
 
     public String getCompanyName() {
         return companyName;
@@ -48,14 +53,13 @@ public class Company {
         this.password = password;
     }
 
-    public String geteMail() {
-        return eMail;
+    public String getEmail() {
+        return email;
     }
 
-    public void seteMail(String eMail) {
-        this.eMail = eMail;
+    public void setEmail(String email) {
+        this.email = email;
     }
-
 
     public long getId() {
         return id;
@@ -71,7 +75,7 @@ public class Company {
                 "id=" + id +
                 ", companyName='" + companyName + '\'' +
                 ", password='" + password + '\'' +
-                ", eMail='" + eMail + '\'' +
+                ", email='" + email + '\'' +
                 '}';
     }
 }

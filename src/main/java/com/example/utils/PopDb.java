@@ -34,7 +34,7 @@ public class PopDb {
 //    public Company createCompany(String companyName,String password,String eMail){
 //        Company company= new Company();
 //        company.setCompanyName(companyName);
-//        company.seteMail(eMail);
+//        company.setEmail(eMail);
 //        company.setPassword(password);
 //        return company;
 //    }

@@ -3,9 +3,7 @@ package com.example.database.entity;
 import com.example.database.Enums.CouponType;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Entity
 public class Coupon {
@@ -24,19 +22,8 @@ public class Coupon {
     @ManyToOne
     private Company company;
 
-    @ManyToMany
-    private List<Customer> customers= new ArrayList<>();
-
-    public List<Customer> getCustomers() {
-        return customers;
-    }
-
-    public void setCustomers(List<Customer> customers) {
-        this.customers = customers;
-    }
-    public void addCustomer(Customer customer){
-        customers.add(customer);
-    }
+    @ManyToMany(fetch = FetchType.EAGER)
+    private Set<Customer> customers = new HashSet<>();
 
     public Company getCompany() {
         return company;
@@ -46,19 +33,17 @@ public class Coupon {
         this.company = company;
     }
 
+    public Set<Customer> getCustomers() {
+        return customers;
+    }
 
-    ;
-//     public  Coupon(){}
-//    public Coupon(String title, Date start_Date, Date end_Date, int amount, CouponType type, String message, double price, String image) {
-//        this.title = title;
-//        this.start_Date = start_Date;
-//        this.end_Date = end_Date;
-//        this.amount = amount;
-//        this.type = type;
-//        this.message = message;
-//        this.price = price;
-//        this.image = image;
-//    }
+    public void setCustomers(Set<Customer> customers) {
+        this.customers = customers;
+    }
+
+    public void removeCustomer(Customer customer) {
+        this.customers.remove(customer);
+    }
 
     public long getId() {
         return id;
@@ -147,4 +132,18 @@ public class Coupon {
                 '}';
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Coupon coupon = (Coupon) o;
+
+        return title.equals(coupon.title);
+    }
+
+    @Override
+    public int hashCode() {
+        return title.hashCode();
+    }
 }
