@@ -4,10 +4,12 @@ import com.example.database.Enums.CouponType;
 import com.example.database.entity.Company;
 import com.example.database.entity.Coupon;
 import com.example.database.entity.Customer;
+import org.hibernate.sql.Select;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 
 public interface CouponRepo extends JpaRepository<Coupon, Long> {
@@ -22,5 +24,10 @@ public interface CouponRepo extends JpaRepository<Coupon, Long> {
     default List<Coupon> findCouponsByCustomer(Customer customer){
         return findCouponsByCustomersContains(customer);
     }
+    public List<Coupon>findAllByType(CouponType couponType);
+
+    public List<Coupon>findAllByPriceIsLessThanEqual(double price);
+
+
 
 }

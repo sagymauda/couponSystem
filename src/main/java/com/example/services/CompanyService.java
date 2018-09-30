@@ -18,4 +18,5 @@ public interface CompanyService {
 
     public List<Coupon> getAllByType(CouponType type);
 
+    public List<Coupon> getAllByPrice(double price);
 }

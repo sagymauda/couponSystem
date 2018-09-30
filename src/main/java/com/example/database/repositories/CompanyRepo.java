@@ -15,4 +15,6 @@ public interface CompanyRepo extends JpaRepository<Company, Long> {
     public List<Company> findAll();
 
 
+
+
 }

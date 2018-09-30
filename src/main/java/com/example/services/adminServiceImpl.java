@@ -1,20 +1,24 @@
 package com.example.services;
 
 import com.example.database.entity.Company;
+import com.example.database.entity.Coupon;
 import com.example.database.entity.Customer;
 import com.example.database.repositories.CompanyRepo;
 import com.example.database.repositories.CouponRepo;
 import com.example.database.repositories.CustomerRepo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
 
 @Service
 public class adminServiceImpl implements AdminService {
+    private static final Logger logger = LoggerFactory.getLogger(adminServiceImpl.class);
+
 
     @Autowired
     private CompanyRepo companyRepo;
@@ -30,7 +34,7 @@ public class adminServiceImpl implements AdminService {
         int counter = 0;
         for (Company com : companies) {
             if (com.getCompanyName().equals(company.getCompanyName())) {
-                System.out.println("could not create the company");
+                logger.error("could not create the company");
                 counter++;
             }
             if (counter < 0) {
@@ -42,7 +46,12 @@ public class adminServiceImpl implements AdminService {
 
     @Override
     public void removeCompany(Company company) {
-    companyRepo.delete(company);
+        // delete company (first delete it's coupons)
+        List<Coupon> coupons = couponRepo.findCouponsByCompany(company);
+        for (Coupon c : coupons) {
+            couponRepo.delete(c);
+        }
+        companyRepo.delete(company);
 
     }
 
@@ -50,7 +59,7 @@ public class adminServiceImpl implements AdminService {
     public void updateCompany(Company company) {
         Company company1 = new Company();
         company1.setPassword(company.getPassword());
-        company1.seteMail(company.geteMail());
+        company1.setEmail(company.getEmail());
         companyRepo.save(company1);
 
     }
@@ -76,7 +85,7 @@ public class adminServiceImpl implements AdminService {
         int counter = 0;
         for (Customer cust : customers) {
             if (cust.getCustName().equals(customer.getCustName())) {
-                System.out.println("could not create the customer");
+                logger.error("could not create the customer");
                 counter++;
             }
             if (counter < 0) {
@@ -87,6 +96,13 @@ public class adminServiceImpl implements AdminService {
 
     @Override
     public void removeCustomer(Customer customer) {
+        // delete customer (first remove it from all coupons)
+        List<Coupon> customerCoupons1 = couponRepo.findCouponsByCustomer(customer);
+        for (Coupon c : customerCoupons1) {
+            c.removeCustomer(customer);
+            couponRepo.save(c);
+        }
+        customerRepo.delete(customer);
 
     }
 
@@ -100,7 +116,7 @@ public class adminServiceImpl implements AdminService {
     @Override
     public Customer getCustomer(long id) {
         Customer customer =new Customer();
-        customer=customerRepo.getCustomerById(id);
+        customer=customerRepo.getOne(id);
         return customer;
     }
 

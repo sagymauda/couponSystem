@@ -12,10 +12,12 @@ import java.util.List;
 public interface CustomerRepo extends JpaRepository<Customer,Long> {
 
     default List<Customer> findCustomersByCoupon(Coupon coupon) {
+
         return findCustomersByCouponsContains(coupon);
     }
 
-    default List<Customer> findCustomersByCompany(Company company) {
+    default List<Customer> findCustomersByCompany(Company company)
+    {
         return findCustomersByCompanyId(company.getId());
     }
 

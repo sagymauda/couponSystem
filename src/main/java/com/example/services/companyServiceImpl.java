@@ -6,6 +6,8 @@ import com.example.database.entity.Coupon;
 import com.example.database.repositories.CompanyRepo;
 import com.example.database.repositories.CouponRepo;
 import com.example.database.repositories.CustomerRepo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -14,6 +16,8 @@ import java.util.List;
 
 @Component
 public class companyServiceImpl implements CompanyService {
+    private static final Logger logger = LoggerFactory.getLogger(companyServiceImpl.class);
+
     @Autowired
     private CompanyRepo companyRepo;
     @Autowired
@@ -26,7 +30,7 @@ public class companyServiceImpl implements CompanyService {
         int counter = 0;
         for (Coupon coup : coupons) {
             if (coup.getTitle().equals(coupon.getTitle())) {
-                System.out.println("could not create the coupon");
+                logger.error("could not create the coupon");
                 counter++;
             }
             if (counter < 0) {
@@ -38,6 +42,7 @@ public class companyServiceImpl implements CompanyService {
 
     @Override
     public void removeCoupon(Coupon coupon) {
+couponRepo.delete(coupon);
 
     }
 
@@ -52,7 +57,7 @@ public class companyServiceImpl implements CompanyService {
     @Override
     public Coupon getCouponById(long id) {
         Coupon coupon = new Coupon();
-        coupon = couponRepo.getCouponById(id);
+        coupon = couponRepo.getOne(id);
 
         return coupon;
     }
@@ -68,8 +73,16 @@ public class companyServiceImpl implements CompanyService {
     @Override
     public List<Coupon> getAllByType(CouponType type) {
         List<Coupon> coupons = new ArrayList<>();
-        coupons = couponRepo.getCouponsByType(type);
-        //here  i stoped!!!!!
+        coupons = couponRepo.findAllByType(type);
         return coupons;
     }
+
+    @Override
+    public List<Coupon> getAllByPrice(double price) {
+        List<Coupon> coupons = new ArrayList<>();
+coupons=couponRepo.findAllByPriceIsLessThanEqual(price);
+        return coupons;
+    }
+
+
 }
