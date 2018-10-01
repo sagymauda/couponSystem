@@ -101,10 +101,11 @@ public class MyRunner implements CommandLineRunner {
 //           couponRepo.delete(c);
 //        }
 //        companyRepo.delete(company);
-       // customerService.purchaseCoupon(coupon2,customer);
+        customerService.purchaseCoupon(coupon2,customer);
         List<Coupon>coupons= new ArrayList<>();
+//shahaf this is not working
 
-        coupons=  customerService.getAllPurchasedCouponsByPriceUpTo(4.0);
+        coupons=  couponRepo.findAllByPriceIsLessThanEqual(3.0);
         System.out.println(coupons.toString()+"fhrghgfgrthrthrthrth");
         System.out.println("making a change");
     }

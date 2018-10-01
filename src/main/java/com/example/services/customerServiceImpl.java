@@ -25,11 +25,14 @@ public class customerServiceImpl implements CustomerService {
 
     @Override
     public void purchaseCoupon(Coupon coupon,Customer customer) {
-        Set<Customer> customers = new HashSet<>();
+        //taking all coupons from customer//looking that the coupon isnt there then looking for amount bigger then zerom
+        //and then put in.
+        Set<Customer>customers = new HashSet<>();
+       List<Coupon> coupons = new ArrayList<>();
+        coupons=couponRepo.findCouponsByCustomer(customer);
         int counter=0;
-        customers.add(customer);
-        for(Customer cust : customers){
-            if(cust.getCoupons().contains(coupon)){
+        for(Coupon coupon1 :coupons){
+            if(coupon1.equals(coupon)){
                 counter++;
                 logger.error("cannot dd coupon allready bought it ");
             }
@@ -39,8 +42,10 @@ public class customerServiceImpl implements CustomerService {
             }
         }
         if(counter!=0) {
+            customers.add(customer);
             coupon.setCustomers(customers);
             couponRepo.save(coupon);
+            System.out.println("ok he did it he mannged to save the customer o coupon");
         }
 
     }
@@ -63,7 +68,7 @@ coupons=couponRepo.findAllByType(type);
 
     @Override
     public List<Coupon> getAllPurchasedCouponsByPriceUpTo(double price) {
-        List<Coupon>coupons = new ArrayList<>();
+        List<Coupon>coupons =new ArrayList<>();
         coupons=couponRepo.findAllByPriceIsLessThanEqual(price);
 
         return coupons;
