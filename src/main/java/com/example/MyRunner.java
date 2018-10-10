@@ -104,10 +104,10 @@ public class MyRunner implements CommandLineRunner {
         customerService.purchaseCoupon(coupon2,customer);
         List<Coupon>coupons= new ArrayList<>();
 //shahaf this is not working
-
-        coupons=  couponRepo.findAllByPriceIsLessThanEqual(3.0);
-        System.out.println(coupons.toString()+"fhrghgfgrthrthrthrth");
-        System.out.println("making a change");
+//
+//        coupons=  couponRepo.findAllByPriceIsLessThanEqual(3.0);
+//        System.out.println(coupons.toString()+"fhrghgfgrthrthrthrth");
+//        System.out.println("making a change");
     }
 
 }
